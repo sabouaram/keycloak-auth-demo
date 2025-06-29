@@ -96,7 +96,7 @@ The application will be available at [http://localhost:8081](http://localhost:80
 - **Admin credentials**: `admin/admin`  
 - **Port**: `8080` (configurable via `KEYCLOAK_PORT`)
 - **Mode**: Development (`start-dev`)
-- **Features**: Metrics and health checks enabled
+
 
 ### Application Configuration (config.yaml)
 
