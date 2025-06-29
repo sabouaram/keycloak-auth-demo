@@ -161,7 +161,7 @@ A test user is automatically created during setup:
 
 ### SSL Certificates
 
-#### server.crt & server.key
+#### server.crt & server.key (are self signed for demo purposes)
 These certificates serve multiple purposes:
 - **SAML Signing**: Used by the Service Provider to sign SAML requests
 - **HTTPS Server**: Enables SSL/TLS when `SCHEME: https` in the config yaml file
