@@ -143,7 +143,7 @@ A test user is automatically created during setup:
 - Application entry point and HTTP server setup
 - Gin router configuration and middleware setup
 - Session store initialization
-- SSL/TLS configuration for HTTPS mode
+- SSL/TLS configuration for HTTPS mode (for full HTTPS, make sure to configure the Keycloak container with TLS and set the scheme to https in config.yaml)    
 - Route definitions and server startup logic
 
 #### sso.go  
