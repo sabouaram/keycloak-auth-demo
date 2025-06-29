@@ -30,7 +30,7 @@ The setup uses HTTP-only configuration for development purposes (HTTPS is disabl
 ├── setup-keycloak.sh          # Keycloak configuration script
 ├── config.yaml                # Go application configuration
 ├── main.go                    # Main application entry point
-├── auth.go                    # SAML authentication handlers
+├── sso.go                    # SAML authentication handlers
 ├── config.go                  # Configuration parsing and validation
 ├── utils.go                   # Utility functions and helpers
 ├── server.crt                 # SSL certificate for SP signing/HTTPS
