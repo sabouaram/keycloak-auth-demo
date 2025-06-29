@@ -142,9 +142,6 @@ A test user is automatically created during setup:
 #### main.go
 - Application entry point and HTTP server setup
 - Gin router configuration and middleware setup
-- Session store initialization
-- SSL/TLS configuration for HTTPS mode (for full HTTPS, make sure to configure the Keycloak container with TLS and set the scheme to https in config.yaml)    
-- Route definitions and server startup logic
 
 #### sso.go  
 - SAML handlers 
@@ -158,7 +155,7 @@ A test user is automatically created during setup:
 
 
 ### SSL Certificates
-
+[for full HTTPS, make sure to configure the Keycloak container with TLS and set the scheme to https in config.yaml]  
 #### server.crt & server.key (self signed for demo purposes)
 These certificates serve multiple purposes:
 - **SAML Signing**: Used by the Service Provider to sign SAML requests
