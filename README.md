@@ -33,7 +33,6 @@ The setup uses HTTP-only configuration for development purposes (HTTPS is disabl
 ├── server.crt                 # SSL certificate for SP signing/HTTPS
 ├── server.key                 # SSL private key for SP signing/HTTPS
 ├── templates/                 # HTML templates
-├── static/                    # Static assets
 └── README.md                  # This file
 ```
 
