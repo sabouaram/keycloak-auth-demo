@@ -165,6 +165,10 @@ func (h *SSOHandler) SAMLCallback(c *gin.Context) {
 		return
 	}
 
+	if storedRelay == nil {
+		return
+	}
+
 	if storedRelay.(string) != relayState {
 		c.HTML(http.StatusBadRequest, "error.html", gin.H{
 			"error": "Invalid SAML Relay State",
@@ -413,6 +417,10 @@ func (h *SSOHandler) SAMLLogoutCallback(c *gin.Context) {
 		session       = sessions.Default(c)
 		relayState, _ = c.GetQuery("RelayState")
 	)
+
+	if session.Get("saml_logout_req") == nil {
+		return
+	}
 
 	if relayState == session.Get("saml_logout_req").(string) {
 
