@@ -15,7 +15,7 @@ This project demonstrates how to set up SAML authentication using:
 - **PostgreSQL 15** as the Keycloak database
 - **Go application** as the Service Provider (SP)
 
-The setup uses HTTP-only configuration for development purposes (HTTPS is disabled by default but can be used with self signed / trusted certs).
+The setup uses HTTP-only configuration for learning purposes (HTTPS is disabled by default but can be used with self signed / trusted certs).
 
 ## Prerequisites
 
