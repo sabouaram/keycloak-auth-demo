@@ -192,13 +192,7 @@ The Go application provides the following endpoints:
 **Note**: Session timeout is configured both in Keycloak (SSO session) and the Go application (cookie session) to maintain consistency.
 Always ensure that the MAX_SESSION_AGE (config.yaml) is equal to the keycloack idp SSO session timeouts in the setup-keycloack script
 
-## Development vs Production
 
-### Current Setup (Development)
-- HTTP-only communication
-- Self-signed certificates disabled
-- Insecure skip verify enabled
-- Development mode for Keycloak
 
 
 ## Development Tools
