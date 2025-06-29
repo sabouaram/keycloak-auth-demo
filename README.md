@@ -1,7 +1,6 @@
-# Keycloak SAML2.0 Demo
+# Keycloak SAML2.0 Demo (SP initiated)  
 
-A demonstration repo showcasing SAML Single Sign-On (SSO) integration between Keycloak as Identity Provider (IdP) and a simple Go-based Service Provider (SP).
-(SP initiated)  
+A demonstration repo showcasing SAML Single Sign-On (SSO) integration between Keycloak as Identity Provider (IdP) and a simple Go-based Service Provider (SP).  
 Used GO SAML2.0 module => https://github.com/russellhaering/gosaml2  
 HTTP Framework: gin-gonic
 
