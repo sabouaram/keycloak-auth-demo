@@ -224,14 +224,6 @@ func (h *SSOHandler) SAMLCallback(c *gin.Context) {
 	session.Set("saml_session_index", assertionInfo.SessionIndex)
 	session.Set("saml_name_id", assertionInfo.NameID)
 
-	if err = session.Save(); err != nil {
-		c.HTML(http.StatusInternalServerError, "error.html", gin.H{
-			"error": "Failed to update session",
-			"debug": err.Error(),
-		})
-		return
-	}
-
 	session.Delete("saml_request_relay")
 
 	userInfo := &UserInfo{

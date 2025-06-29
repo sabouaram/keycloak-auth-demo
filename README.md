@@ -8,6 +8,7 @@ A demonstration repo showcasing SAML Single Sign-On (SSO) integration between Ke
 ![](images/signin.png)
 ![](images/idp-signin.png)
 ![](images/home.png)
+![](images/debug.png)
 This project demonstrates how to set up SAML authentication using:
 - **Keycloak 22.0** as the Identity Provider (IdP)
 - **PostgreSQL 15** as the Keycloak database
@@ -30,7 +31,7 @@ The setup uses HTTP-only configuration for development purposes (HTTPS is disabl
 ├── setup-keycloak.sh          # Keycloak configuration script
 ├── config.yaml                # Go application configuration
 ├── main.go                    # Main application entry point
-├── sso.go                    # SAML authentication handlers
+├── auth.go                    # SAML authentication handlers
 ├── config.go                  # Configuration parsing and validation
 ├── utils.go                   # Utility functions and helpers
 ├── server.crt                 # SSL certificate for SP signing/HTTPS
@@ -135,7 +136,7 @@ A test user is automatically created during setup:
 
 ## Application Components
 
-### Go Files (main pkg)
+### Go Package Files
 
 #### main.go
 - Application entry point and HTTP server setup
@@ -161,7 +162,7 @@ A test user is automatically created during setup:
 
 ### SSL Certificates
 
-#### server.crt & server.key (are self signed for demo purposes)
+#### server.crt & server.key
 These certificates serve multiple purposes:
 - **SAML Signing**: Used by the Service Provider to sign SAML requests
 - **HTTPS Server**: Enables SSL/TLS when `SCHEME: https` in the config yaml file
