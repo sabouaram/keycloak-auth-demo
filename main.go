@@ -17,6 +17,7 @@ var (
 	err        error
 	r          *gin.Engine
 	store      cookie.Store
+	keyPair    tls.Certificate
 	ssoHandler *SSOHandler
 )
 
@@ -44,9 +45,9 @@ func main() {
 
 	r.Use(sessions.Sessions("session", store))
 
-	if ssoHandler, err = NewSSOHandler(cfg); err != nil {
-		log.Fatal("failed to initiate the SSO handler instance: ", err)
-	}
+	//if ssoHandler, err = NewSSOHandler(cfg); err != nil {
+	//	log.Fatal("failed to initiate the SSO handler instance: ", err)
+	//}
 
 	r.GET("/", ssoHandler.Home)
 	r.GET("/login", ssoHandler.LoginPage)
@@ -64,7 +65,13 @@ func main() {
 	}
 
 	if cfg.Scheme == "https" {
+
+		if keyPair, err = tls.LoadX509KeyPair("server.crt", "server.key"); err != nil {
+			log.Fatalf("failed to load key pair: %v", err)
+		}
+
 		server.TLSConfig = &tls.Config{
+			Certificates:       []tls.Certificate{keyPair},
 			InsecureSkipVerify: cfg.InsecureSkipVerify,
 			MinVersion:         tls.VersionTLS12,
 			CipherSuites: []uint16{
@@ -77,7 +84,7 @@ func main() {
 
 		log.Println("Server starting on " + cfg.BaseURL)
 
-		if err = server.ListenAndServeTLS("server.crt", "server.key"); err != nil {
+		if err = server.ListenAndServeTLS("", ""); err != nil {
 			panic(fmt.Sprintf("Failed to start server: %v", err))
 		}
 	}
