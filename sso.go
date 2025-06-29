@@ -42,27 +42,31 @@ func NewSSOHandler(cfg *Config) (*SSOHandler, error) {
 
 	httpC = &http.Client{}
 
-	if cfg.Scheme == "https" {
-		httpC = &http.Client{
-			Transport: &http.Transport{
-				TLSClientConfig: &tls.Config{
-					InsecureSkipVerify: cfg.InsecureSkipVerify,
-					MinVersion:         tls.VersionTLS12,
-					CipherSuites: []uint16{
-						tls.TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
-					},
-				},
-			},
-		}
-	}
-
-	// SAML Conf
 	if keyPair, err = tls.LoadX509KeyPair("server.crt", "server.key"); err != nil {
 		return nil, fmt.Errorf("failed to load key pair: %v", err)
 	}
 
 	certStore := dsig.MemoryX509CertificateStore{
 		Roots: []*x509.Certificate{},
+	}
+
+	if cfg.Scheme == "https" {
+		tlsConfig := &tls.Config{
+			Certificates:       []tls.Certificate{keyPair},
+			InsecureSkipVerify: cfg.InsecureSkipVerify,
+			MinVersion:         tls.VersionTLS12,
+			CipherSuites: []uint16{
+				tls.TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,
+				tls.TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
+				tls.TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
+				tls.TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
+			},
+		}
+		httpC = &http.Client{
+			Transport: &http.Transport{
+				TLSClientConfig: tlsConfig,
+			},
+		}
 	}
 
 	// Shared certStore and metadata loading
