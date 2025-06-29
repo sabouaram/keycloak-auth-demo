@@ -147,11 +147,8 @@ A test user is automatically created during setup:
 - Route definitions and server startup logic
 
 #### sso.go  
-- SAML authentication handlers and SSO logic
-- Login/logout flow implementation
-- SAML assertion processing
-- Session management for authenticated users
-- Callback handlers for SAML responses
+- SAML handlers 
+- Session management 
 
 #### config.go
 - Configuration file parsing and validation
