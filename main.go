@@ -57,7 +57,7 @@ func main() {
 	r.GET("/logout", ssoHandler.Logout)
 	r.GET("/debug", ssoHandler.Debug)
 	r.GET("/auth/saml/slo", ssoHandler.SAMLLogoutCallback)
-	r.Static("/static", "./static")
+	
 
 	server := &http.Server{
 		Addr:    strings.TrimPrefix(cfg.BaseURL, cfg.Scheme+"://"),
