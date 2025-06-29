@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keycloak Auth Demo - Login</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f5f5f5; }
+        .container { max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .header { text-align: center; border-bottom: 2px solid #007bff; padding-bottom: 20px; margin-bottom: 30px; }
+        .login-option { background: #f8f9fa; padding: 20px; margin: 15px 0; border-radius: 8px; border: 1px solid #dee2e6; }
+        .btn { display: inline-block; padding: 12px 24px; margin: 10px 5px; text-decoration: none; border-radius: 5px; font-weight: bold; text-align: center; min-width: 200px; }
+        .btn-primary { background: #007bff; color: white; }
+        .btn-success { background: #28a745; color: white; }
+        .btn-secondary { background: #6c757d; color: white; }
+        .info { background: #d1ecf1; color: #0c5460; padding: 15px; border-radius: 5px; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>SAML 2.0 Authentication</h1>
+          
+        </div>
+
+
+
+        <div class="login-option">
+            <h3>SAML 2.0</h3>
+            <p>SAML 2.0 authentication flow with Keycloak</p>
+            <a href="/auth/saml/login" class="btn btn-success">Login with SAML</a>
+        </div>
+
+        <div class="info">
+            <h4>Configuration Info</h4>
+            <p><strong>Keycloak URL:</strong> {{.keycloakURL}}</p>
+            <p><strong>Realm:</strong> {{.realm}}</p>
+            <p><strong>Test User:</strong> testuser / password</p>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="/" class="btn btn-secondary">🏠 Back to Home</a>
+            <a href="/debug" class="btn btn-secondary">🐛 Debug Info</a>
+        </div>
+    </div>
+</body>
+</html>

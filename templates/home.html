@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keycloak Auth Demo - Home</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f5f5f5; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .header { border-bottom: 2px solid #007bff; padding-bottom: 20px; margin-bottom: 30px; }
+        .user-info { background: #e9f4ff; padding: 20px; border-radius: 5px; margin: 20px 0; }
+        .session-info { background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 10px 0; }
+        .btn { display: inline-block; padding: 10px 20px; margin: 5px; text-decoration: none; border-radius: 5px; font-weight: bold; }
+        .btn-primary { background: #007bff; color: white; }
+        .btn-danger { background: #dc3545; color: white; }
+        .btn-info { background: #17a2b8; color: white; }
+        .status { padding: 10px; border-radius: 5px; margin: 10px 0; }
+        .status.success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .status.warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        .claims { background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 10px 0; max-height: 300px; overflow-y: auto; }
+        pre { white-space: pre-wrap; word-wrap: break-word; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Keycloak Authentication Demo</h1>
+          
+        </div>
+
+        {{if .isLoggedIn}}
+            <div class="status success">
+                <strong>Authenticated Successfully!</strong>
+            </div>
+
+            <div class="user-info">
+                <h2>👤 User Information</h2>
+                <p><strong>NameID:</strong> {{.user.ID}}</p>
+                <p><strong>Email:</strong> {{.user.Email}}</p>
+                <p><strong>Auth Method:</strong> <span style="background: #007bff; color: white; padding: 2px 8px; border-radius: 3px;">{{.user.AuthMethod}}</span></p>
+            </div>
+
+            <div class="session-info">
+                <h3>Session Information</h3>
+                <p><strong>Session Expires:</strong> {{.user.SessionExpiry.Format "2006-01-02 15:04:05 MST"}}</p>
+                {{if .user.SessionExpiry.Before .currentTime}}
+                    <div class="status warning">Session has expired! Please log in again.</div>
+                {{else}}
+                    <p><strong>Time Remaining:</strong> {{.remainingMinutes}} minutes</p>
+                {{end}}
+            </div>
+
+            <div class="claims">
+                <h3>🔍 Raw Claims/Attributes</h3>
+                <pre>{{printf "%+v" .user.RawClaims}}</pre>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <a href="/logout" class="btn btn-danger">Logout</a>
+                <a href="/debug" class="btn btn-info">Debug Info</a>
+                <a href="/" class="btn btn-primary">Refresh</a>
+            </div>
+        {{else}}
+            <div class="status warning">
+                <strong>Not Authenticated</strong> - Please log in to continue
+            </div>
+
+            <div style="margin-top: 30px;">
+                <a href="/login" class="btn btn-primary">Go to Login Page</a>
+                <a href="/debug" class="btn btn-info">Debug Info</a>
+            </div>
+        {{end}}
+
+        <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #dee2e6; color: #6c757d; font-size: 14px;">
+            <p><strong>Available Endpoints:</strong></p>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/login">Login Page</a></li>
+                <li><a href="/auth/saml/login">SAML Login</a></li>
+                <li><a href="/auth/saml/metadata">SAML Metadata</a></li>
+                <li><a href="/debug">Debug</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

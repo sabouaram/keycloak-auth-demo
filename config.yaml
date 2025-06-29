@@ -1,0 +1,16 @@
+SCHEME: http
+
+KEYCLOAK_URL: localhost:8080
+REALM: demo-realm
+
+
+BASE_URL: localhost:8081
+SAML_ENTITY_ID: localhost:8081/saml/metadata
+SAML_METADATA_URL: localhost:8080/realms/demo-realm/protocol/saml/descriptor
+
+
+SESSION_SECRET: qZ9$Lp#j3X!8VwT&rS6mA^eBtN2u@yFb
+
+MAX_SESSION_AGE: 600
+
+INSECURE_SKIP_VERIFY: true  

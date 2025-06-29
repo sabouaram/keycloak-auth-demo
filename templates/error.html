@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keycloak Auth Demo - Error</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f5f5f5; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .header { border-bottom: 2px solid #dc3545; padding-bottom: 20px; margin-bottom: 30px; }
+        .error { background: #f8d7da; color: #721c24; padding: 20px; border-radius: 5px; margin: 20px 0; border: 1px solid #f5c6cb; }
+        .debug { background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 5px; margin: 20px 0; }
+        .btn { display: inline-block; padding: 10px 20px; margin: 5px; text-decoration: none; border-radius: 5px; font-weight: bold; }
+        .btn-primary { background: #007bff; color: white; }
+        .btn-secondary { background: #6c757d; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Authentication Error</h1>
+        </div>
+
+        <div class="error">
+            <h3>Error Details:</h3>
+            <p>{{.error}}</p>
+        </div>
+
+        {{if .debug}}
+        <div class="debug">
+            <h3>Debug Information:</h3>
+            <pre>{{.debug}}</pre>
+        </div>
+        {{end}}
+
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="/" class="btn btn-primary">🏠 Back to Home</a>
+            <a href="/login" class="btn btn-secondary">Try Again</a>
+            <a href="/debug" class="btn btn-secondary">Debug Info</a>
+        </div>
+    </div>
+</body>
+</html>
