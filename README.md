@@ -195,7 +195,7 @@ Always ensure that the MAX_SESSION_AGE (config.yaml) is equal to the keycloack i
 
 ### SAML Debugging
 
-**Tip**: Use the SAML-Tracer browser extension to inspect SAML requests and responses during development:
+**Tip**: Use the SAML-Tracer browser extension to inspect SAML requests and responses:
 
 - **Firefox**: [SAML-Tracer Extension](https://addons.mozilla.org/en-US/firefox/addon/saml-tracer/)
 - **Chrome**: Search for "SAML Tracer" in Chrome Web Store
@@ -203,8 +203,7 @@ Always ensure that the MAX_SESSION_AGE (config.yaml) is equal to the keycloack i
 This extension helps you:
 - View SAML authentication requests
 - Inspect SAML assertions and responses
-- Debug attribute mappings
-- Troubleshoot authentication flows
+
 
 
 
