@@ -31,7 +31,7 @@ The setup uses HTTP-only configuration for development purposes (HTTPS is disabl
 ├── setup-keycloak.sh          # Keycloak configuration script
 ├── config.yaml                # Go application configuration
 ├── main.go                    # Main application entry point
-├── auth.go                    # SAML authentication handlers
+├── sso.go                    # SAML  handlers
 ├── config.go                  # Configuration parsing and validation
 ├── utils.go                   # Utility functions and helpers
 ├── server.crt                 # SSL certificate for SP signing/HTTPS
@@ -136,7 +136,7 @@ A test user is automatically created during setup:
 
 ## Application Components
 
-### Go Package Files
+### Go Files (main pkg)
 
 #### main.go
 - Application entry point and HTTP server setup
@@ -162,7 +162,7 @@ A test user is automatically created during setup:
 
 ### SSL Certificates
 
-#### server.crt & server.key
+#### server.crt & server.key (self signed for demo purposes)
 These certificates serve multiple purposes:
 - **SAML Signing**: Used by the Service Provider to sign SAML requests
 - **HTTPS Server**: Enables SSL/TLS when `SCHEME: https` in the config yaml file
