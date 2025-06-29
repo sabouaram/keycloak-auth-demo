@@ -150,15 +150,11 @@ A test user is automatically created during setup:
 
 #### config.go
 - Configuration file parsing and validation
-- Environment variable handling
-- Application settings structure definition
 - Configuration validation and defaults
 
 #### utils.go
 - Utility functions and helper methods
-- Common functionality shared across the application
-- String manipulation and formatting helpers  
-- Error handling utilities
+
 
 ### SSL Certificates
 
