@@ -4,7 +4,10 @@ A demonstration repo showcasing SAML Single Sign-On (SSO) integration between Ke
 (SP initiated)
 
 ## Overview
-
+![](images/login.png)
+![](images/signin.png)
+![](images/idp-signin.png)
+![](images/home.png)
 This project demonstrates how to set up SAML authentication using:
 - **Keycloak 22.0** as the Identity Provider (IdP)
 - **PostgreSQL 15** as the Keycloak database
@@ -141,7 +144,7 @@ A test user is automatically created during setup:
 - SSL/TLS configuration for HTTPS mode
 - Route definitions and server startup logic
 
-#### auth.go  
+#### sso.go  
 - SAML authentication handlers and SSO logic
 - Login/logout flow implementation
 - SAML assertion processing
