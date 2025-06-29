@@ -45,9 +45,9 @@ func main() {
 
 	r.Use(sessions.Sessions("session", store))
 
-	//if ssoHandler, err = NewSSOHandler(cfg); err != nil {
-	//	log.Fatal("failed to initiate the SSO handler instance: ", err)
-	//}
+	if ssoHandler, err = NewSSOHandler(cfg); err != nil {
+		log.Fatal("failed to initiate the SSO handler instance: ", err)
+	}
 
 	r.GET("/", ssoHandler.Home)
 	r.GET("/login", ssoHandler.LoginPage)
