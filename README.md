@@ -135,7 +135,7 @@ A test user is automatically created during setup:
 
 ## Application Components
 
-### Go Package Files
+### Go Files (main pkg)
 
 #### main.go
 - Application entry point and HTTP server setup
