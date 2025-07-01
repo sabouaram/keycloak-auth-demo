@@ -56,8 +56,7 @@ func main() {
 	r.GET("/auth/saml/metadata", ssoHandler.SAMLMetadata)
 	r.GET("/logout", ssoHandler.Logout)
 	r.GET("/debug", ssoHandler.Debug)
-	r.GET("/auth/saml/slo", ssoHandler.SAMLLogoutCallback)
-	
+	r.POST("/auth/saml/slo", ssoHandler.SAMLLogoutCallback)
 
 	server := &http.Server{
 		Addr:    strings.TrimPrefix(cfg.BaseURL, cfg.Scheme+"://"),
