@@ -95,6 +95,7 @@ func NewSSOHandler(cfg *Config) (*SSOHandler, error) {
 		SPSigningKeyStore:           dsig.TLSCertKeyStore(keyPair),
 		AllowMissingAttributes:      false,
 		NameIdFormat:                "urn:oasis:names:tc:SAML:2.0:nameid-format:persistent",
+		ServiceProviderSLOURL:       fmt.Sprintf("%s/auth/saml/slo", cfg.BaseURL),
 	}
 
 	return &SSOHandler{
@@ -290,10 +291,6 @@ func (h *SSOHandler) Logout(c *gin.Context) {
 		userInfo *UserInfo
 	)
 
-	if userInfo == nil {
-		session.Clear()
-	}
-	
 	if session.Get("user_info"); session.Get("user_info") != nil {
 		if _, ok := session.Get("user_info").(string); ok {
 			json.Unmarshal([]byte(session.Get("user_info").(string)), &userInfo)
@@ -422,11 +419,16 @@ func (h *SSOHandler) initiateSAMLLogout(c *gin.Context) {
 func (h *SSOHandler) SAMLLogoutCallback(c *gin.Context) {
 
 	var (
-		session       = sessions.Default(c)
-		relayState, _ = c.GetQuery("RelayState")
+		session    = sessions.Default(c)
+		relayState = c.PostForm("RelayState")
+		samlResp   = c.PostForm("SAMLResponse")
 	)
 
 	if session.Get("saml_logout_req") == nil {
+		return
+	}
+
+	if _, err = h.samlSP.ValidateEncodedLogoutResponsePOST(samlResp); err != nil {
 		return
 	}
 
@@ -448,32 +450,4 @@ func (h *SSOHandler) SAMLLogoutCallback(c *gin.Context) {
 }
 
 func (h *SSOHandler) Debug(c *gin.Context) {
-
-	var (
-		session      = sessions.Default(c)
-		userInfoData = session.Get("user_info")
-		userInfo     *UserInfo
-	)
-
-	if userInfoData != nil {
-		if userInfoStr, ok := userInfoData.(string); ok {
-			json.Unmarshal([]byte(userInfoStr), &userInfo)
-		}
-	}
-
-	debugInfo := map[string]interface{}{
-		"session_data": userInfo,
-		"current_time": time.Now().Local(),
-		"environment": map[string]string{
-			"KEYCLOAK_URL":         h.cfg.KeycloakURL,
-			"REALM":                h.cfg.Realm,
-			"SAML_ENTITY_ID":       h.cfg.SAMLEntityID,
-			"SAML_METADATA_URL":    h.cfg.SAMLMetadataURL,
-			"INSECURE_SKIP_VERIFY": "",
-		},
-	}
-
-	c.HTML(http.StatusOK, "debug.html", gin.H{
-		"debug": debugInfo,
-	})
 }
