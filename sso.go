@@ -292,8 +292,6 @@ func (h *SSOHandler) Logout(c *gin.Context) {
 
 	if userInfo == nil {
 		session.Clear()
-		c.Redirect(http.StatusFound, "/")
-		return
 	}
 	
 	if session.Get("user_info"); session.Get("user_info") != nil {
