@@ -171,7 +171,7 @@ The Go application provides the following endpoints:
 - `GET /auth/saml/login` - Initiate SAML login
 - `POST /auth/saml/acs` - SAML assertion consumer service
 - `GET /auth/saml/metadata` - SAML SP metadata
-- `GET /auth/saml/slo` - SAML single logout callback
+- `POST /auth/saml/slo` - SAML single logout callback
 - `GET /logout` - Logout endpoint
 - `GET /debug` - Debug information
 
