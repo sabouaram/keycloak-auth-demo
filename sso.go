@@ -450,4 +450,32 @@ func (h *SSOHandler) SAMLLogoutCallback(c *gin.Context) {
 }
 
 func (h *SSOHandler) Debug(c *gin.Context) {
+
+	var (
+		session      = sessions.Default(c)
+		userInfoData = session.Get("user_info")
+		userInfo     *UserInfo
+	)
+
+	if userInfoData != nil {
+		if userInfoStr, ok := userInfoData.(string); ok {
+			json.Unmarshal([]byte(userInfoStr), &userInfo)
+		}
+	}
+
+	debugInfo := map[string]interface{}{
+		"session_data": userInfo,
+		"current_time": time.Now().Local(),
+		"environment": map[string]string{
+			"KEYCLOAK_URL":         h.cfg.KeycloakURL,
+			"REALM":                h.cfg.Realm,
+			"SAML_ENTITY_ID":       h.cfg.SAMLEntityID,
+			"SAML_METADATA_URL":    h.cfg.SAMLMetadataURL,
+			"INSECURE_SKIP_VERIFY": "",
+		},
+	}
+
+	c.HTML(http.StatusOK, "debug.html", gin.H{
+		"debug": debugInfo,
+	})
 }
