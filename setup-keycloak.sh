@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 echo "Waiting for Keycloak to be ready..."
 sleep 10
 
@@ -39,7 +38,7 @@ curl -s -X POST http://localhost:8080/admin/realms \
     "displayName": "Demo Realm"
   }'
 
-# Configure realm SSO session settings (10 minutes) => if this need to be changed the cookie session age in the go SP should be == [config.yaml]
+# Configure realm SSO session settings (10 minutes)
 curl -s -X PUT http://localhost:8080/admin/realms/demo-realm \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
   -H "Content-Type: application/json" \
@@ -83,13 +82,12 @@ if [ -z "$SAML_CLIENT_ID" ]; then
       }
     }'
     
- 
   SAML_CLIENT_ID=$(curl -s -X GET http://localhost:8080/admin/realms/demo-realm/clients \
     -H "Authorization: Bearer $ADMIN_TOKEN" \
     -H "Content-Type: application/json" | jq -r '.[] | select(.clientId == "http://localhost:8081/saml/metadata") | .id')
 fi
 
-# logout settings
+# Update client with proper logout settings
 curl -s -X PUT http://localhost:8080/admin/realms/demo-realm/clients/$SAML_CLIENT_ID \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
   -H "Content-Type: application/json" \
@@ -102,7 +100,7 @@ curl -s -X PUT http://localhost:8080/admin/realms/demo-realm/clients/$SAML_CLIEN
     "adminUrl": "http://localhost:8081",
     "attributes": {
       "saml.assertion.signature": "true",
-      "saml.force.post.binding": "false",
+      "saml.force.post.binding": "true",
       "saml.multivalued.roles": "false",
       "saml.encrypt": "false",
       "saml.server.signature": "true",
@@ -114,13 +112,14 @@ curl -s -X PUT http://localhost:8080/admin/realms/demo-realm/clients/$SAML_CLIEN
       "saml.authnstatement": "true",
       "display.on.consent.screen": "false",
       "saml.onetimeuse.condition": "false",
-      "saml_single_logout_service_url_redirect": "http://localhost:8081/auth/saml/slo"
+      "saml_single_logout_service_url_post": "http://localhost:8081/auth/saml/slo",
+      "saml.force.post.binding": "true",
+      "saml.server.signature": "true",
+      "saml.client.signature": "false"
     }
-
   }'
 
-
-
+# Add protocol mappers
 curl -s -X POST http://localhost:8080/admin/realms/demo-realm/clients/$SAML_CLIENT_ID/protocol-mappers/models \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
   -H "Content-Type: application/json" \
@@ -136,7 +135,6 @@ curl -s -X POST http://localhost:8080/admin/realms/demo-realm/clients/$SAML_CLIE
       "attribute.nameformat": "Basic"
     }
   }'
-
 
 curl -s -X POST http://localhost:8080/admin/realms/demo-realm/clients/$SAML_CLIENT_ID/protocol-mappers/models \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
@@ -154,7 +152,6 @@ curl -s -X POST http://localhost:8080/admin/realms/demo-realm/clients/$SAML_CLIE
     }
   }'
 
-
 curl -s -X POST http://localhost:8080/admin/realms/demo-realm/clients/$SAML_CLIENT_ID/protocol-mappers/models \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
   -H "Content-Type: application/json" \
@@ -170,8 +167,6 @@ curl -s -X POST http://localhost:8080/admin/realms/demo-realm/clients/$SAML_CLIE
       "attribute.nameformat": "Basic"
     }
   }'
-
-
 
 # Create test user
 curl -s -X POST http://localhost:8080/admin/realms/demo-realm/users \
@@ -189,8 +184,6 @@ curl -s -X POST http://localhost:8080/admin/realms/demo-realm/users \
       "temporary": false
     }]
   }'
-
-
 
 echo "Keycloak configuration completed!"
 echo "Test user created: testuser / password"
